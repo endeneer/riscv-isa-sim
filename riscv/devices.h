@@ -157,6 +157,15 @@ class ns16550_t : public abstract_device_t {
   static const int MAX_BACKOFF = 16;
 };
 
+class cosim_printer_t : public abstract_device_t {
+ public:
+  cosim_printer_t();
+  bool load(reg_t addr, size_t len, uint8_t* bytes);
+  bool store(reg_t addr, size_t len, const uint8_t* bytes);
+ private:
+  uint32_t register_value;
+};
+
 class mmio_plugin_device_t : public abstract_device_t {
  public:
   mmio_plugin_device_t(const std::string& name, const std::string& args);

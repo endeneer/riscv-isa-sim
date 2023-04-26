@@ -365,6 +365,22 @@ int fdt_parse_ns16550(void *fdt, reg_t *ns16550_addr,
   return 0;
 }
 
+int fdt_parse_cosim_printer(void *fdt, reg_t *cosim_printer_addr,
+                      const char *compatible)
+{
+  int nodeoffset, rc;
+
+  nodeoffset = fdt_node_offset_by_compatible(fdt, -1, compatible);
+  if (nodeoffset < 0)
+    return nodeoffset;
+
+  rc = fdt_get_node_addr_size(fdt, nodeoffset, cosim_printer_addr, NULL, "reg");
+  if (rc < 0 || !cosim_printer_addr)
+    return -ENODEV;
+
+  return 0;
+}
+
 int fdt_parse_pmp_num(void *fdt, int cpu_offset, reg_t *pmp_num)
 {
   int rc;

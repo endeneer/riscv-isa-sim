@@ -148,6 +148,13 @@ sim_t::sim_t(const cfg_t *cfg, bool halted,
     bus.add_device(ns16550_base, ns16550.get());
   }
 
+  // create cosim_printer
+  reg_t cosim_printer_base;
+  if (fdt_parse_cosim_printer(fdt, &cosim_printer_base, "cosim_printer") == 0) {
+	  cosim_printer.reset(new cosim_printer_t());
+	  bus.add_device(cosim_printer_base, cosim_printer.get());
+  }
+
   //per core attribute
   int cpu_offset = 0, rc;
   size_t cpu_idx = 0;
